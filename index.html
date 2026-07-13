@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Countdowns - Compacto</title>
+    <title>Dashboard de Countdowns</title>
     <style>
         body, html {
             margin: 0;
@@ -12,25 +12,25 @@
             height: 100%;
             font-family: 'Arial', sans-serif;
             background-color: transparent;
-            overflow: hidden; /* Remove as barras de rolagem */
+            overflow: hidden;
         }
 
-        /* Container em coluna e centralizado */
+        /* Container principal - Forçando um em baixo do outro */
         .dashboard-container {
-            display: flex;
-            flex-direction: column; /* Força um embaixo do outro */
+            display: flex !important;
+            flex-direction: column !important; /* ISSO GARANTE QUE FIQUEM EMPILHADOS */
             align-items: center;
             width: 100%;
             padding: 10px;
-            gap: 15px; /* Espaço pequeno entre os cards */
+            gap: 15px; 
             box-sizing: border-box;
         }
 
-        /* Card Bem Menor */
+        /* Estrutura de cada Widget */
         .countdown-widget {
             width: 100%;
-            max-width: 320px; /* Largura máxima reduzida */
-            height: 90px; /* Altura bem menor */
+            max-width: 280px; /* Largura contida para não esticar demais */
+            height: 110px; /* Altura exata solicitada */
             position: relative; 
             display: flex;
             flex-direction: column;
@@ -39,37 +39,34 @@
             padding: 10px;
             box-sizing: border-box;
             color: white;
-            border-radius: 12px; 
+            border-radius: 10px; 
             
-            /* Fundo Azul Estático */
             background: linear-gradient(135deg, #003366, #0055A4, #0077CC);
             z-index: 1;
             transition: all 0.5s ease;
         }
 
-        /* Efeito Blur Base */
         .countdown-widget::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 12px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #003366, #0055A4, #0077CC);
-            filter: blur(6px); 
+            filter: blur(5px); 
             opacity: 0.6; 
             z-index: -1; 
             transition: all 0.5s ease;
         }
 
-        /* Efeito ativado 5 dias antes (Glow Neon) */
         .countdown-widget.glow-active::before {
             filter: blur(12px);
             opacity: 1;
             box-shadow: 0 0 15px 5px rgba(0, 162, 255, 0.8);
         }
 
-        /* Títulos e Textos Menores */
+        /* Fontes menores e ajustadas */
         .countdown-title {
-            font-size: 12px;
+            font-size: 11px; /* Fonte do título menor */
             font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -80,9 +77,9 @@
 
         .countdown-timer {
             display: flex;
-            justify-content: space-around; /* Distribui bem o espaço */
+            justify-content: space-around; 
             width: 100%;
-            gap: 5px; /* Impede que os números colem */
+            gap: 5px; 
         }
 
         .countdown-item {
@@ -91,24 +88,23 @@
         }
 
         .countdown-value {
-            font-size: 22px; /* Fonte menor para caber dias de 3 dígitos */
+            font-size: 18px; /* Números bem menores para evitar que colem */
             font-weight: 900;
             line-height: 1;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
 
         .countdown-label {
-            font-size: 8px;
+            font-size: 7px; /* Letras de DIAS/HORAS menores */
             font-weight: bold;
             opacity: 0.8;
         }
 
-        /* Texto GO-LIVE */
         .go-live-text {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-align: center;
             text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
             width: 100%;
