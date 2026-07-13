@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Countdowns V3</title>
+    <title>Dashboard de Countdowns V4</title>
     <style>
         body, html {
             margin: 0;
@@ -22,7 +22,7 @@
             box-sizing: border-box;
         }
 
-        /* Animação super lenta e suave para o gradiente */
+        /* Animação ultra lenta (45 segundos) */
         @keyframes slowGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -31,40 +31,39 @@
 
         .countdown-widget {
             width: 100%;
-            max-width: 300px;
-            height: 110px;
+            max-width: 320px; /* Levemente mais largo para as fontes maiores */
+            height: 125px; /* Um pouco mais alto para dar respiro */
             position: relative; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 10px 15px;
             margin: 0 auto 15px auto;
             box-sizing: border-box;
             color: white;
-            border-radius: 10px; 
+            border-radius: 12px; 
             
-            /* CORES DO FUNDO: Substitua aqui pelas cores exatas do seu card de aniversariantes */
-            background: linear-gradient(135deg, #0055A4, #43E97B, #0077CC, #38F9D7);
-            background-size: 300% 300%;
-            animation: slowGradient 20s ease infinite; /* 20 segundos = bem devagar */
+            /* Gradiente começando forte no Azul, indo pro Verde e voltando pro Azul */
+            background: linear-gradient(135deg, #004488, #0077CC, #20B2AA, #43E97B, #004488);
+            background-size: 400% 400%; /* Mais espaço para as cores transitarem devagar */
+            animation: slowGradient 45s ease infinite; 
             z-index: 1;
         }
 
-        /* O Blur atrás, acompanhando a mesma animação e cores */
+        /* O Blur acompanhando as mesmas cores e animação */
         .countdown-widget::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 10px;
+            border-radius: 12px;
             
-            /* CORES DO BLUR: Deixe igual ao fundo acima */
-            background: linear-gradient(135deg, #0055A4, #43E97B, #0077CC, #38F9D7);
-            background-size: 300% 300%;
-            animation: slowGradient 20s ease infinite;
+            background: linear-gradient(135deg, #004488, #0077CC, #20B2AA, #43E97B, #004488);
+            background-size: 400% 400%;
+            animation: slowGradient 45s ease infinite;
             
-            filter: blur(8px); /* Intensidade do blur base */
-            opacity: 0.65; 
+            filter: blur(8px); 
+            opacity: 0.7; 
             z-index: -1; 
             transition: all 0.5s ease;
         }
@@ -73,16 +72,17 @@
         .countdown-widget.glow-active::before {
             filter: blur(15px);
             opacity: 1;
-            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4); /* Brilho esbranquiçado suave */
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
         }
 
+        /* Título maior e mais distante do contador */
         .countdown-title {
-            font-size: 11px; 
+            font-size: 13px; /* Aumentado */
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 14px; /* Mais espaço separando do contador */
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
         }
 
@@ -98,22 +98,24 @@
             flex: 1;
         }
 
+        /* Números maiores */
         .countdown-value {
-            font-size: 18px; 
+            font-size: 22px; /* Aumentado */
             font-weight: 900;
             line-height: 1;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
 
+        /* Textos menores base (DIAS, HORAS) maiores */
         .countdown-label {
-            font-size: 7px;
+            font-size: 9px; /* Aumentado */
             font-weight: bold;
             opacity: 0.8;
         }
 
         .go-live-text {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: 2px;
             text-align: center;
