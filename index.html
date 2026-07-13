@@ -10,81 +10,84 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; 
             font-family: 'Arial', sans-serif;
             background-color: transparent;
+            /* Permite rolagem caso a tela seja muito baixa para os 3 painéis */
+            overflow-y: auto; 
+            overflow-x: hidden;
         }
 
-        /* Container principal */
+        /* Container principal - Layout em coluna */
         .dashboard-container {
             display: flex;
+            flex-direction: column; /* Um embaixo do outro */
+            align-items: center; /* Centraliza horizontalmente */
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             box-sizing: border-box;
-            padding: 15px;
-            gap: 25px; /* Espaçamento entre os widgets */
-        }
-
-        /* Animação que faz as cores rodarem */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            padding: 20px;
+            gap: 20px; /* Espaçamento entre os widgets */
         }
 
         /* Estrutura de cada Widget individual */
         .countdown-widget {
-            flex: 1; 
-            height: 100%;
-            position: relative; /* Necessário para o efeito de blur atrás */
+            width: 100%;
+            max-width: 600px; /* Limite de largura para ficar bem no PC e no celular */
+            height: 120px; /* Altura fixa solicitada */
+            position: relative; 
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px 15px;
             box-sizing: border-box;
             color: white;
             border-radius: 15px; 
             
-            /* Fundo do próprio widget */
-            background: linear-gradient(135deg, #00BFA5, #2196F3, #FFEB3B, #7E57C2);
-            background-size: 300% 300%;
-            animation: gradientShift 12s ease infinite; /* 12 segundos para um movimento suave */
+            /* Fundo estático em tons de azul */
+            background: linear-gradient(135deg, #003366, #0055A4, #0077CC);
             z-index: 1;
+            transition: all 0.5s ease;
         }
 
-        /* O Efeito de Luz / Blur atrás do widget */
+        /* O Efeito de Blur Base atrás do widget */
         .countdown-widget::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 15px;
             
-            /* Mesmo fundo e mesma animação para manter a sincronia perfeita */
-            background: linear-gradient(135deg, #00BFA5, #2196F3, #FFEB3B, #7E57C2);
-            background-size: 300% 300%;
-            animation: gradientShift 12s ease infinite;
+            /* Mesmo fundo em tons de azul */
+            background: linear-gradient(135deg, #003366, #0055A4, #0077CC);
             
-            /* Aqui acontece a mágica da luz */
+            filter: blur(8px); /* Blur base leve */
+            opacity: 0.5; /* Intensidade inicial */
+            z-index: -1; 
+            transition: all 0.5s ease; /* Transição suave para o glow */
+        }
+
+        /* Efeito ativado 5 dias antes */
+        .countdown-widget.glow-active::before {
             filter: blur(15px);
-            opacity: 0.8; /* Intensidade do brilho */
-            z-index: -1; /* Joga o brilho para trás do widget */
+            opacity: 1;
+            box-shadow: 0 0 25px 10px rgba(0, 162, 255, 0.7); /* Brilho neon azul intenso */
         }
 
         .countdown-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
             text-align: center;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Sombra leve para leitura */
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3); 
         }
 
         .countdown-timer {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            padding: 0 5px;
+            padding: 0 10px;
             box-sizing: border-box;
         }
 
@@ -94,22 +97,23 @@
             position: relative;
         }
 
+        /* Divisórias entre os números */
         .countdown-item:not(:last-child)::after {
             content: '';
             position: absolute;
             right: 0;
-            top: 15%;
-            height: 70%;
+            top: 10%;
+            height: 80%;
             width: 1px;
             background-color: rgba(255, 255, 255, 0.3);
         }
 
         .countdown-value {
-            font-size: 36px; 
+            font-size: 32px; /* Ajustado para caber nos 120px de altura */
             font-weight: 900;
             line-height: 1;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 4px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .countdown-label {
@@ -117,15 +121,32 @@
             font-weight: bold;
             opacity: 0.9;
         }
+
+        /* Classe de texto quando o contador zera */
+        .go-live-text {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-align: center;
+            text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
+            width: 100%;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
     <div class="dashboard-container">
         
-        <div class="countdown-widget">
+        <div class="countdown-widget" id="widget-coagro">
             <div class="countdown-title">GO-LIVE COAGRO</div>
-            <div class="countdown-timer">
+            <div class="countdown-timer" id="timer-coagro">
                 <div class="countdown-item">
                     <div class="countdown-value" id="coagro-days">00</div>
                     <div class="countdown-label">DIAS</div>
@@ -145,9 +166,9 @@
             </div>
         </div>
 
-        <div class="countdown-widget">
+        <div class="countdown-widget" id="widget-camp">
             <div class="countdown-title">GO-LIVE CAMP</div>
-            <div class="countdown-timer">
+            <div class="countdown-timer" id="timer-camp">
                 <div class="countdown-item">
                     <div class="countdown-value" id="camp-days">00</div>
                     <div class="countdown-label">DIAS</div>
@@ -167,9 +188,9 @@
             </div>
         </div>
 
-        <div class="countdown-widget">
+        <div class="countdown-widget" id="widget-cooazul">
             <div class="countdown-title">GO-LIVE COOAZUL</div>
-            <div class="countdown-timer">
+            <div class="countdown-timer" id="timer-cooazul">
                 <div class="countdown-item">
                     <div class="countdown-value" id="cooazul-days">00</div>
                     <div class="countdown-label">DIAS</div>
@@ -198,24 +219,40 @@
             cooazul: new Date('May 3, 2027 00:00:00').getTime()
         };
 
+        // 5 dias em milissegundos
+        const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
+
         function updateAllCountdowns() {
             const now = new Date().getTime();
 
             for (const key in targetDates) {
                 const distance = targetDates[key] - now;
+                
+                const widgetEl = document.getElementById(`widget-${key}`);
+                const timerEl = document.getElementById(`timer-${key}`);
+
+                // Se a data já passou (zerou)
+                if (distance <= 0) {
+                    // Evita substituir o HTML em todo ciclo (1s) se já estiver como GO-LIVE
+                    if (!widgetEl.classList.contains('is-live')) {
+                        timerEl.innerHTML = '<div class="go-live-text">GO-LIVE!</div>';
+                        widgetEl.classList.remove('glow-active');
+                        widgetEl.classList.add('is-live');
+                    }
+                    continue; // Pula para o próximo painel
+                }
+
+                // Se estiver dentro dos 5 dias, ativa o brilho azul
+                if (distance <= FIVE_DAYS_MS) {
+                    widgetEl.classList.add('glow-active');
+                } else {
+                    widgetEl.classList.remove('glow-active');
+                }
 
                 const dEl = document.getElementById(`${key}-days`);
                 const hEl = document.getElementById(`${key}-hours`);
                 const mEl = document.getElementById(`${key}-minutes`);
                 const sEl = document.getElementById(`${key}-seconds`);
-
-                if (distance < 0) {
-                    if(dEl) dEl.innerText = "00";
-                    if(hEl) hEl.innerText = "00";
-                    if(mEl) mEl.innerText = "00";
-                    if(sEl) sEl.innerText = "00";
-                    continue;
-                }
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
