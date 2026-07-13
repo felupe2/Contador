@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Countdowns</title>
+    <title>Dashboard de Countdowns V3</title>
     <style>
         body, html {
             margin: 0;
@@ -44,35 +44,36 @@
             color: white;
             border-radius: 10px; 
             
-            /* Gradiente Azul e Verde + Animação */
-            background: linear-gradient(135deg, #003366, #00A86B, #0055A4, #008055);
+            /* CORES DO FUNDO: Substitua aqui pelas cores exatas do seu card de aniversariantes */
+            background: linear-gradient(135deg, #0055A4, #43E97B, #0077CC, #38F9D7);
             background-size: 300% 300%;
             animation: slowGradient 20s ease infinite; /* 20 segundos = bem devagar */
             z-index: 1;
         }
 
-        /* O Blur Azul e Verde atrás, acompanhando a mesma animação */
+        /* O Blur atrás, acompanhando a mesma animação e cores */
         .countdown-widget::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 10px;
             
-            background: linear-gradient(135deg, #003366, #00A86B, #0055A4, #008055);
+            /* CORES DO BLUR: Deixe igual ao fundo acima */
+            background: linear-gradient(135deg, #0055A4, #43E97B, #0077CC, #38F9D7);
             background-size: 300% 300%;
             animation: slowGradient 20s ease infinite;
             
-            filter: blur(6px); 
-            opacity: 0.6; 
+            filter: blur(8px); /* Intensidade do blur base */
+            opacity: 0.65; 
             z-index: -1; 
             transition: all 0.5s ease;
         }
 
-        /* O Glow 5 dias antes (mantive um tom azul turquesa brilhante) */
+        /* O Glow 5 dias antes */
         .countdown-widget.glow-active::before {
-            filter: blur(14px);
+            filter: blur(15px);
             opacity: 1;
-            box-shadow: 0 0 15px 5px rgba(0, 191, 165, 0.8);
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4); /* Brilho esbranquiçado suave */
         }
 
         .countdown-title {
