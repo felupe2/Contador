@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Countdowns V4</title>
+    <title>Dashboard de Countdowns V5</title>
     <style>
         body, html {
             margin: 0;
@@ -22,7 +23,6 @@
             box-sizing: border-box;
         }
 
-        /* Animação ultra lenta (45 segundos) */
         @keyframes slowGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -31,9 +31,9 @@
 
         .countdown-widget {
             width: 100%;
-            max-width: 320px; /* Levemente mais largo para as fontes maiores */
-            height: 125px; /* Um pouco mais alto para dar respiro */
-            position: relative; 
+            max-width: 320px;
+            height: 125px;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -42,55 +42,51 @@
             margin: 0 auto 15px auto;
             box-sizing: border-box;
             color: white;
-            border-radius: 12px; 
-            
-            /* Gradiente começando forte no Azul, indo pro Verde e voltando pro Azul */
+            border-radius: 12px;
+
             background: linear-gradient(135deg, #004488, #0077CC, #20B2AA, #43E97B, #004488);
-            background-size: 400% 400%; /* Mais espaço para as cores transitarem devagar */
-            animation: slowGradient 45s ease infinite; 
+            background-size: 400% 400%;
+            animation: slowGradient 45s ease infinite;
             z-index: 1;
         }
 
-        /* O Blur acompanhando as mesmas cores e animação */
         .countdown-widget::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             border-radius: 12px;
-            
+
             background: linear-gradient(135deg, #004488, #0077CC, #20B2AA, #43E97B, #004488);
             background-size: 400% 400%;
             animation: slowGradient 45s ease infinite;
-            
-            filter: blur(8px); 
-            opacity: 0.7; 
-            z-index: -1; 
+
+            filter: blur(8px);
+            opacity: 0.7;
+            z-index: -1;
             transition: all 0.5s ease;
         }
 
-        /* O Glow 5 dias antes */
         .countdown-widget.glow-active::before {
             filter: blur(15px);
             opacity: 1;
             box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
         }
 
-        /* Título maior e mais distante do contador */
         .countdown-title {
-            font-size: 13px; /* Aumentado */
+            font-size: 13px;
             font-weight: bold;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 14px; /* Mais espaço separando do contador */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+            margin-bottom: 14px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .countdown-timer {
             display: flex;
-            justify-content: space-around; 
+            justify-content: space-around;
             width: 100%;
-            gap: 5px; 
+            gap: 5px;
         }
 
         .countdown-item {
@@ -98,18 +94,16 @@
             flex: 1;
         }
 
-        /* Números maiores */
         .countdown-value {
-            font-size: 22px; /* Aumentado */
+            font-size: 22px;
             font-weight: 900;
             line-height: 1;
             margin-bottom: 4px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
 
-        /* Textos menores base (DIAS, HORAS) maiores */
         .countdown-label {
-            font-size: 9px; /* Aumentado */
+            font-size: 9px;
             font-weight: bold;
             opacity: 0.8;
         }
@@ -133,128 +127,156 @@
 </head>
 <body>
 
-    <div class="dashboard-container">
-        
-        <div class="countdown-widget" id="widget-coagro">
-            <div class="countdown-title">GO-LIVE COAGRO</div>
-            <div class="countdown-timer" id="timer-coagro">
-                <div class="countdown-item">
-                    <div class="countdown-value" id="coagro-days">00</div>
-                    <div class="countdown-label">DIAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="coagro-hours">00</div>
-                    <div class="countdown-label">HORAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="coagro-minutes">00</div>
-                    <div class="countdown-label">MIN.</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="coagro-seconds">00</div>
-                    <div class="countdown-label">SEG.</div>
-                </div>
+<div class="dashboard-container">
+
+    <!-- COAGRO -->
+    <div class="countdown-widget" id="widget-coagro">
+        <div class="countdown-title">GO-LIVE COAGRO</div>
+        <div class="countdown-timer" id="timer-coagro">
+            <div class="countdown-item">
+                <div class="countdown-value" id="coagro-days">00</div>
+                <div class="countdown-label">DIAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="coagro-hours">00</div>
+                <div class="countdown-label">HORAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="coagro-minutes">00</div>
+                <div class="countdown-label">MIN.</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="coagro-seconds">00</div>
+                <div class="countdown-label">SEG.</div>
             </div>
         </div>
-
-        <div class="countdown-widget" id="widget-camp">
-            <div class="countdown-title">GO-LIVE CAMP</div>
-            <div class="countdown-timer" id="timer-camp">
-                <div class="countdown-item">
-                    <div class="countdown-value" id="camp-days">00</div>
-                    <div class="countdown-label">DIAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="camp-hours">00</div>
-                    <div class="countdown-label">HORAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="camp-minutes">00</div>
-                    <div class="countdown-label">MIN.</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="camp-seconds">00</div>
-                    <div class="countdown-label">SEG.</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="countdown-widget" id="widget-cooazul">
-            <div class="countdown-title">GO-LIVE COOAZUL</div>
-            <div class="countdown-timer" id="timer-cooazul">
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cooazul-days">00</div>
-                    <div class="countdown-label">DIAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cooazul-hours">00</div>
-                    <div class="countdown-label">HORAS</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cooazul-minutes">00</div>
-                    <div class="countdown-label">MIN.</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cooazul-seconds">00</div>
-                    <div class="countdown-label">SEG.</div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <script>
-        const targetDates = {
-            coagro: new Date('January 4, 2027 00:00:00').getTime(),
-            camp: new Date('January 4, 2027 00:00:00').getTime(),
-            cooazul: new Date('May 3, 2027 00:00:00').getTime()
-        };
+    <!-- CAMP -->
+    <div class="countdown-widget" id="widget-camp">
+        <div class="countdown-title">GO-LIVE CAMP</div>
+        <div class="countdown-timer" id="timer-camp">
+            <div class="countdown-item">
+                <div class="countdown-value" id="camp-days">00</div>
+                <div class="countdown-label">DIAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="camp-hours">00</div>
+                <div class="countdown-label">HORAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="camp-minutes">00</div>
+                <div class="countdown-label">MIN.</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="camp-seconds">00</div>
+                <div class="countdown-label">SEG.</div>
+            </div>
+        </div>
+    </div>
 
-        const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
+    <!-- COOAZUL -->
+    <div class="countdown-widget" id="widget-cooazul">
+        <div class="countdown-title">GO-LIVE COOAZUL</div>
+        <div class="countdown-timer" id="timer-cooazul">
+            <div class="countdown-item">
+                <div class="countdown-value" id="cooazul-days">00</div>
+                <div class="countdown-label">DIAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="cooazul-hours">00</div>
+                <div class="countdown-label">HORAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="cooazul-minutes">00</div>
+                <div class="countdown-label">MIN.</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="cooazul-seconds">00</div>
+                <div class="countdown-label">SEG.</div>
+            </div>
+        </div>
+    </div>
 
-        function updateAllCountdowns() {
-            const now = new Date().getTime();
+    <!-- COPERMUTUM -->
+    <div class="countdown-widget" id="widget-copermutum">
+        <div class="countdown-title">GO-LIVE COPERMUTUM</div>
+        <div class="countdown-timer" id="timer-copermutum">
+            <div class="countdown-item">
+                <div class="countdown-value" id="copermutum-days">00</div>
+                <div class="countdown-label">DIAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="copermutum-hours">00</div>
+                <div class="countdown-label">HORAS</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="copermutum-minutes">00</div>
+                <div class="countdown-label">MIN.</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="copermutum-seconds">00</div>
+                <div class="countdown-label">SEG.</div>
+            </div>
+        </div>
+    </div>
 
-            for (const key in targetDates) {
-                const distance = targetDates[key] - now;
-                
-                const widgetEl = document.getElementById(`widget-${key}`);
-                const timerEl = document.getElementById(`timer-${key}`);
+</div>
 
-                if (distance <= 0) {
-                    if (!widgetEl.classList.contains('is-live')) {
-                        timerEl.innerHTML = '<div class="go-live-text">GO-LIVE!</div>';
-                        widgetEl.classList.remove('glow-active');
-                        widgetEl.classList.add('is-live');
-                    }
-                    continue; 
-                }
+<script>
+    const targetDates = {
+        coagro: new Date('January 4, 2027 00:00:00').getTime(),
+        camp: new Date('January 4, 2027 00:00:00').getTime(),
+        cooazul: new Date('May 3, 2027 00:00:00').getTime(),
+        copermutum: new Date('January 4, 2027 00:00:00').getTime()
+    };
 
-                if (distance <= FIVE_DAYS_MS) {
-                    widgetEl.classList.add('glow-active');
-                } else {
+    const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
+
+    function updateAllCountdowns() {
+        const now = new Date().getTime();
+
+        for (const key in targetDates) {
+            const distance = targetDates[key] - now;
+
+            const widgetEl = document.getElementById(`widget-${key}`);
+            const timerEl = document.getElementById(`timer-${key}`);
+
+            if (distance <= 0) {
+                if (!widgetEl.classList.contains('is-live')) {
+                    timerEl.innerHTML = '<div class="go-live-text">GO-LIVE!</div>';
                     widgetEl.classList.remove('glow-active');
+                    widgetEl.classList.add('is-live');
                 }
-
-                const dEl = document.getElementById(`${key}-days`);
-                const hEl = document.getElementById(`${key}-hours`);
-                const mEl = document.getElementById(`${key}-minutes`);
-                const sEl = document.getElementById(`${key}-seconds`);
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                if(dEl) dEl.innerText = days < 10 ? '0' + days : days;
-                if(hEl) hEl.innerText = hours < 10 ? '0' + hours : hours;
-                if(mEl) mEl.innerText = minutes < 10 ? '0' + minutes : minutes;
-                if(sEl) sEl.innerText = seconds < 10 ? '0' + seconds : seconds;
+                continue;
             }
-        }
 
-        setInterval(updateAllCountdowns, 1000);
-        updateAllCountdowns(); 
-    </script>
+            if (distance <= FIVE_DAYS_MS) {
+                widgetEl.classList.add('glow-active');
+            } else {
+                widgetEl.classList.remove('glow-active');
+            }
+
+            const dEl = document.getElementById(`${key}-days`);
+            const hEl = document.getElementById(`${key}-hours`);
+            const mEl = document.getElementById(`${key}-minutes`);
+            const sEl = document.getElementById(`${key}-seconds`);
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if(dEl) dEl.innerText = days < 10 ? '0' + days : days;
+            if(hEl) hEl.innerText = hours < 10 ? '0' + hours : hours;
+            if(mEl) mEl.innerText = minutes < 10 ? '0' + minutes : minutes;
+            if(sEl) sEl.innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+    }
+
+    setInterval(updateAllCountdowns, 1000);
+    updateAllCountdowns();
+</script>
+
 </body>
 </html>
